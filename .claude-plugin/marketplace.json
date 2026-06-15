@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "product-operating-model",
+  "description": "Marketplace hosting the Product Coach plugin — an AI coach for product operating model practices.",
+  "owner": {
+    "name": "Aleksei Sotskov"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "product-coach",
+      "source": "./plugins/product-coach",
+      "description": "AI Product Coach — guidance and feedback on product strategy, discovery, and delivery.",
+      "version": "0.1.0",
+      "keywords": ["product-management", "coaching", "discovery", "strategy"],
+      "category": "productivity"
+    }
+  ]
+}

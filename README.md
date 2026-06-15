@@ -26,9 +26,15 @@ In Claude Code or Cowork:
 /plugin install product-coach@product-operating-model
 ```
 
+Once installed, the plugin shows up in Cowork:
+
+![Plugin installed in Claude Cowork](assets/plugin-installed-in-claude-cowork.png)
+
 ## Use
 
 After install, the `product-coach` skill triggers automatically when you ask for feedback or guidance on product strategy, discovery, roadmaps, OKRs, PRDs, etc.
+
+![Product Coach skill available in Claude Cowork](assets/plugin-available-to-be-called-in-claude-cowork.png)
 
 ## Status
 

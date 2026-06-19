@@ -1,6 +1,6 @@
 {
   "skill_name": "product-coach",
-  "description": "Initial eval set for the product-coach skill. Covers the wiki-grounded coaching loop, the no-wiki fallback, the read-only guard-rail, and honesty about wiki silence. Each prompt is written as something a real PM/founder might actually say in a Cowork session.",
+  "description": "Eval set for the product-coach skill. Covers the wiki-grounded coaching loop, the no-wiki fallback, the read-only guard-rail, honesty about wiki silence, the strict citation rules from SKILL.md §5a (no dangling [[brackets]], markdown links to verified files), and the wiki-only suggestion rule (no stub promotion, no fabricated 'recommended next page'). Each prompt is written as something a real PM/founder might actually say in a Cowork session.",
   "wiki_setup": {
     "wiki_repo": "https://github.com/alexeyhimself/product-operating-model-llm-wiki",
     "wiki_markers": ["CLAUDE.md", "index.md", "wiki/"],
@@ -14,7 +14,7 @@
       "prompt": "I want to build a prototype of an AI-powered onboarding wizard for our SaaS — new users get a 3-step guided setup instead of the current empty dashboard. I was thinking I'd spend the next two weeks coding it in our actual codebase so we can ship it as an A/B test. Sound good?",
       "expected_output": "Coach pulls the user back from jumping straight to a coded A/B test. Asks which kind of prototype (feasibility / value / usability / viability) and which risky assumption it's meant to invalidate. Cites at least one wiki page using [[page-name]] syntax. Closes with one concrete next step the user can take in the next 48 hours.",
       "expectations": [
-        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response cites at least one wiki page as a markdown link of the form [title](relative/path/page.md), and the file at that path exists in the attached wiki",
         "Response asks a Socratic / clarifying question before endorsing the two-week build plan",
         "Response distinguishes between types of prototypes (e.g. feasibility, value, usability, viability) OR explicitly asks the user which type they mean",
         "Response names the underlying assumption the prototype should invalidate, or asks the user to name it",
@@ -29,7 +29,7 @@
       "prompt": "Here's our Q3 roadmap. Can you give it a sanity check?\n\n- July: ship dark mode\n- August: ship Slack integration\n- September: ship CSV export, ship new dashboard widget, ship SSO\n\nWe committed these to the board last week. The team is excited.",
       "expected_output": "Coach names the feature-factory / output-driven framing problem instead of just rearranging features. Asks what outcomes / customer problems each feature is supposed to move. Cites relevant wiki pages. Coaches kindly but firmly — does not validate the roadmap as-is.",
       "expectations": [
-        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response cites at least one wiki page as a markdown link of the form [title](relative/path/page.md), and the file at that path exists in the attached wiki",
         "Response explicitly names the output-driven / feature-factory framing as a concern (using language like 'feature factory', 'output-driven', 'outputs vs outcomes', or equivalent)",
         "Response asks about the customer problems or outcomes the features are meant to address",
         "Response does NOT simply tidy up or reorder the existing feature list as the primary response",
@@ -43,7 +43,7 @@
       "prompt": "Draft Q4 OKRs for my growth team, please give feedback:\n\nObjective: Grow the product\nKR1: Ship referral feature by Oct 31\nKR2: Launch new pricing page\nKR3: Run 3 webinars\n\nMy VP wants these locked in by Friday.",
       "expected_output": "Coach surfaces that KRs are outputs / activities, not outcomes. Asks what the team actually wants to be true for the customer or business if these are achieved. Cites wiki page(s) on OKRs / outcomes. Coaches toward rewriting at least one KR as a measurable outcome before locking anything in.",
       "expectations": [
-        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response cites at least one wiki page as a markdown link of the form [title](relative/path/page.md), and the file at that path exists in the attached wiki",
         "Response explicitly identifies the outputs-vs-outcomes distinction (or equivalent: 'activities vs results', 'ship dates vs customer impact')",
         "Response asks at least one Socratic question about target customer, behavior change, or measurable outcome",
         "Response does NOT just polish the wording of the existing KRs while keeping them as ship-dates",
@@ -57,7 +57,7 @@
       "prompt": "Our 30-day retention dropped from 42% to 31% over the last quarter. I want to use an opportunity solution tree to figure out what to do. Can you help me build one?",
       "expected_output": "Coach grounds the OST work in the wiki (Teresa Torres / continuous discovery canon), walks the user through the structure (desired outcome → opportunities → solutions → experiments), and asks Socratic questions specific to this user's retention drop instead of giving a generic template. Cites pages.",
       "expectations": [
-        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response cites at least one wiki page as a markdown link of the form [title](relative/path/page.md), and the file at that path exists in the attached wiki",
         "Response references Teresa Torres, continuous discovery, or opportunity solution trees as canon (SVPG / Torres tradition)",
         "Response walks the user through OST structure (desired outcome, opportunities, solutions, experiments / assumption tests) rather than only naming the framework abstractly",
         "Response asks a Socratic question tied to this specific retention drop (e.g. which customer segment, what behavior changed, what evidence they already have)",
@@ -112,12 +112,41 @@
       "prompt": "Retention is hurting us. We're going to build a referral program — invite-a-friend gets both sides a free month. The CEO already announced it on all-hands. I just need help designing the referral flow.",
       "expected_output": "Coach kindly pushes back on jumping to the referral-program solution before validating the problem (low retention is not obviously solved by referrals; referrals are typically a growth lever, not a retention lever). Asks what evidence they have that this will move retention, what the underlying churn driver actually is, and what assumption needs to hold for the referral program to work. Cites wiki pages.",
       "expectations": [
-        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response cites at least one wiki page as a markdown link of the form [title](relative/path/page.md), and the file at that path exists in the attached wiki",
         "Response pushes back on jumping to the referral-program solution before validating the underlying problem",
         "Response asks about the underlying retention / churn problem (not just the referral flow design)",
         "Response names at least one assumption that needs to hold for the referral program to actually move retention",
         "Response does NOT immediately dive into designing the referral flow as the primary response",
         "Response closes with one concrete next step the user can take within ~48 hours"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "no-dangling-citations",
+      "wiki_attached": true,
+      "prompt": "Quick one — can you point me to the wiki's take on continuous discovery, team topologies, and the difference between product and feature teams? I want to skim the right pages before our offsite tomorrow.",
+      "expected_output": "Coach answers by pointing at wiki pages, but every page it cites resolves to a real file in the attached wiki. No bare [[bracket]] syntax that doesn't render. No invented page names. If a topic the user named has no wiki coverage, the coach says so plainly instead of fabricating a plausible link.",
+      "expectations": [
+        "Every citation in the response is a markdown link of the form [title](relative/path/page.md), not the bare [[name]] form",
+        "Every file path the response links to exists in the attached wiki (a grader / script should be able to confirm each linked path resolves)",
+        "Response does NOT cite any page that does not exist in the wiki, in any syntax (no [[invented-name]], no [fake](wiki/path/that-does-not-exist.md))",
+        "For any of the three topics the user named that the wiki does not cover, the response says so explicitly rather than fabricating a citation",
+        "Response does NOT use the bare [[page-name]] convention as the user-facing citation style"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "no-stub-promotion-where-to-start",
+      "wiki_attached": true,
+      "prompt": "Where should we start?",
+      "expected_output": "Coach proposes starting points that are grounded in real, existing wiki content with substance. It does NOT suggest reading stub pages, pages that don't exist, or 'recommended next pages' that the wiki only has placeholders for. It does NOT offer to co-author or build new wiki pages with the user (that is maintainer work). If it offers to do a case-study / baseline exercise against the user's org, it frames that as a working session against existing wiki principles, not as filling in a missing wiki page.",
+      "expectations": [
+        "Every wiki page the response suggests the user read / walk through / start from exists in the attached wiki with real content (not a stub, not a TODO, not a 'planned' placeholder)",
+        "Response does NOT suggest a page that is empty, stubbed, or described as 'not written yet', 'planned', 'recommended next page but nothing's there yet', or equivalent",
+        "Response does NOT offer to draft, build, co-author, or 'start a' new wiki page together with the user as a coaching activity",
+        "If the response offers a baseline / case-study / diagnostic exercise against the user's org, it is framed as applying existing wiki content to the user's situation, not as filling in a missing wiki page",
+        "Response asks at least one Socratic question to narrow the starting point to the user's actual situation, instead of dumping the full table of contents",
+        "All citations follow the markdown-link form from SKILL.md §5a and resolve to existing files"
       ]
     }
   ]

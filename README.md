@@ -43,7 +43,3 @@ After install, the `product-coach` skill triggers automatically when you ask for
 The skill is wiki-grounded: it expects the [Product Operating Model LLM Wiki](https://github.com/alexeyhimself/product-operating-model-llm-wiki) to be attached to your Cowork project. On first invocation the skill scans your attached folders for the wiki (looking for `CLAUDE.md` + `index.md` + `wiki/` at the root) and, if it doesn't find it, asks you whether you'd like to clone it yourself or let it clone for you. Either way, attach the resulting folder to your project **marked read-only** — the skill never writes to the wiki and the read-only flag is a belt to the skill's suspenders.
 
 The skill refreshes the wiki at most once a week via `git pull --ff-only`. If the pull is blocked (e.g. the folder is attached read-only at the filesystem level), the skill tells you and asks you to run `git pull` in the wiki folder yourself.
-
-## Status
-
-Proof of concept. Version `0.2.1` — wiki-grounded.

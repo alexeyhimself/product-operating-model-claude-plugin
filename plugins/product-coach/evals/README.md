@@ -6,11 +6,11 @@ tooling can run these evals against the installed plugin.
 
 ## What's in here
 
-- `evals.json` — 8 evals that target the skill's core behaviors:
+- `evals.json` — 10 evals that target the skill's core behaviors:
 
   | id | name | wiki attached? | what it tests |
   |----|------|----------------|---------------|
-  | 1 | prototyping-discovery-coach | yes | Socratic pullback, prototype-type distinction, [[wiki-page]] citation, 48h next step |
+  | 1 | prototyping-discovery-coach | yes | Socratic pullback, prototype-type distinction, markdown-link citation to a real wiki page, 48h next step |
   | 2 | output-driven-roadmap-pushback | yes | Naming the feature-factory framing, outcomes-vs-outputs reframe |
   | 3 | okr-outcome-vs-output | yes | Surfacing outputs-vs-outcomes, refusing to polish output-shaped KRs |
   | 4 | opportunity-solution-tree-build | yes | Torres / continuous-discovery canon, OST structure, situation-specific Socratic |
@@ -18,6 +18,8 @@ tooling can run these evals against the installed plugin.
   | 6 | refuse-wiki-write | yes | Read-only guard-rail: refuses to add a page, redirects to the wiki's contribution flow |
   | 7 | wiki-silence-honesty | yes | Honest about gaps; does not fabricate citations |
   | 8 | jumps-to-solution-pullback | yes | Pulling back from "we already decided to build X" to problem / assumption |
+  | 9 | no-dangling-citations | yes | §5a strict citation: markdown links only, every linked path resolves to a real file, no `[[invented-name]]` |
+  | 10 | no-stub-promotion-where-to-start | yes | "Where should we start?" — coach does not suggest stub / missing / not-yet-written pages, does not propose co-authoring wiki pages |
 
 Each eval has:
 
@@ -84,10 +86,21 @@ eval tests the fallback branch where the skill asks the user how to proceed.
 
 ## Notes on grading
 
-A few of the expectations are pattern-checkable in a script
-(presence of `[[...]]` citation syntax, absence of writes to the wiki path,
-presence of a "48 hours" / "by Monday" style closing). Others — like
-"pushes back kindly on jumping to a solution" — need an LLM grader.
+A few of the expectations are pattern-checkable in a script:
+
+- **Citation form** — every citation in the response should match the markdown-link
+  pattern `\[[^\]]+\]\([^)]+\.md\)`, and there should be **no** bare `\[\[[^\]]+\]\]`
+  citations (the old style, banned by SKILL.md §5a).
+- **Citation resolution** — for each `(path.md)` capture, the file should exist under
+  the attached `WIKI_ROOT`. Evals 9 and 10 in particular hinge on this; a script
+  can iterate `re.findall(r'\]\(([^)]+\.md)\)', response)` and `os.path.exists`
+  each one against `WIKI_ROOT`.
+- **No writes to the wiki path** — assert no Write/Edit tool call targeted a path
+  under `WIKI_ROOT/`.
+- **48-hour close** — look for a "48 hours" / "by Monday" / "this week" style closing.
+
+Others — like "pushes back kindly on jumping to a solution" or "does not promote
+a stub as a recommended next page" — need an LLM grader.
 
 Keep the script-checkable assertions where they are useful (they're cheap
 and deterministic), and let the LLM grader handle the judgment calls.

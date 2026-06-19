@@ -46,4 +46,4 @@ The skill refreshes the wiki at most once a week via `git pull --ff-only`. If th
 
 ## Status
 
-Proof of concept. Version `0.2.0` — wiki-grounded.
+Proof of concept. Version `0.2.1` — wiki-grounded.

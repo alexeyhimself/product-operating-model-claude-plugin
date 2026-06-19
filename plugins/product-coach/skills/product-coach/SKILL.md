@@ -23,10 +23,12 @@ At the start of every session that triggers this skill, find the wiki. Scan all 
 
 If you find it, treat that directory as `WIKI_ROOT` for the rest of the session and proceed to step 2.
 
-If you do **not** find it, stop and use `AskUserQuestion` to ask the user how to proceed. Present the link (https://github.com/alexeyhimself/product-operating-model-llm-wiki) and offer these options:
+If you do **not** find it, stop and use `AskUserQuestion` to ask the user how to proceed. Present the link (https://github.com/alexeyhimself/product-operating-model-llm-wiki) and offer these options. Name the actor explicitly in each label (Claude vs. the user) rather than using bare "I'll..." / "You'll..." phrasing — once rendered as a question to the user, "I" and "you" become ambiguous about which party they refer to:
 
-1. **I'll clone and attach it myself** — give the user the commands (`git clone https://github.com/alexeyhimself/product-operating-model-llm-wiki.git` then attach the resulting folder to the Cowork project, marked read-only) and wait.
-2. **You clone it, I'll attach** — run `git clone https://github.com/alexeyhimself/product-operating-model-llm-wiki.git` into a sensible location (the user's `~/Documents` or a path they specify), then tell the user the absolute path and ask them to attach that folder to the project, marked read-only.
+1. **Claude clones it, you attach it** — run `git clone https://github.com/alexeyhimself/product-operating-model-llm-wiki.git` yourself into a sensible location (the user's `~/Documents` or a path they specify), then tell the user the absolute path and ask them to attach that folder to the project, marked read-only.
+2. **You clone and attach it yourself** — give the user the commands (`git clone https://github.com/alexeyhimself/product-operating-model-llm-wiki.git` then attach the resulting folder to the Cowork project, marked read-only) and wait.
+
+Note that attaching the folder is always a user action in the Cowork UI — Claude cannot do it directly even under option 1. The only thing that differs between the two options is who runs `git clone`.
 
 Either way, do not attempt to coach without the wiki. The whole point of this skill is to be wiki-grounded; answering from your own training data defeats it.
 

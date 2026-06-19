@@ -11,6 +11,7 @@
   "plugins": [
     {
       "name": "product-coach",
+      "version": "0.2.2",
       "source": "./plugins/product-coach",
       "description": "AI Product Coach grounded in the Product Operating Model LLM Wiki — guidance and feedback on product strategy, discovery, and delivery.",
       "keywords": ["product-management", "coaching", "discovery", "strategy", "product-operating-model", "wiki"],

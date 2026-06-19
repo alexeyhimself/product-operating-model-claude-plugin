@@ -1,0 +1,124 @@
+{
+  "skill_name": "product-coach",
+  "description": "Initial eval set for the product-coach skill. Covers the wiki-grounded coaching loop, the no-wiki fallback, the read-only guard-rail, and honesty about wiki silence. Each prompt is written as something a real PM/founder might actually say in a Cowork session.",
+  "wiki_setup": {
+    "wiki_repo": "https://github.com/alexeyhimself/product-operating-model-llm-wiki",
+    "wiki_markers": ["CLAUDE.md", "index.md", "wiki/"],
+    "notes": "Evals marked `wiki_attached: true` assume the wiki repo is attached to the Cowork project (read-only). Evals marked `wiki_attached: false` assume it is NOT attached — they test the fallback / AskUserQuestion branch."
+  },
+  "evals": [
+    {
+      "id": 1,
+      "name": "prototyping-discovery-coach",
+      "wiki_attached": true,
+      "prompt": "I want to build a prototype of an AI-powered onboarding wizard for our SaaS — new users get a 3-step guided setup instead of the current empty dashboard. I was thinking I'd spend the next two weeks coding it in our actual codebase so we can ship it as an A/B test. Sound good?",
+      "expected_output": "Coach pulls the user back from jumping straight to a coded A/B test. Asks which kind of prototype (feasibility / value / usability / viability) and which risky assumption it's meant to invalidate. Cites at least one wiki page using [[page-name]] syntax. Closes with one concrete next step the user can take in the next 48 hours.",
+      "expectations": [
+        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response asks a Socratic / clarifying question before endorsing the two-week build plan",
+        "Response distinguishes between types of prototypes (e.g. feasibility, value, usability, viability) OR explicitly asks the user which type they mean",
+        "Response names the underlying assumption the prototype should invalidate, or asks the user to name it",
+        "Response closes with one concrete next step the user can take within ~48 hours",
+        "Response does NOT just say 'sounds good, go ahead and build it'"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "output-driven-roadmap-pushback",
+      "wiki_attached": true,
+      "prompt": "Here's our Q3 roadmap. Can you give it a sanity check?\n\n- July: ship dark mode\n- August: ship Slack integration\n- September: ship CSV export, ship new dashboard widget, ship SSO\n\nWe committed these to the board last week. The team is excited.",
+      "expected_output": "Coach names the feature-factory / output-driven framing problem instead of just rearranging features. Asks what outcomes / customer problems each feature is supposed to move. Cites relevant wiki pages. Coaches kindly but firmly — does not validate the roadmap as-is.",
+      "expectations": [
+        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response explicitly names the output-driven / feature-factory framing as a concern (using language like 'feature factory', 'output-driven', 'outputs vs outcomes', or equivalent)",
+        "Response asks about the customer problems or outcomes the features are meant to address",
+        "Response does NOT simply tidy up or reorder the existing feature list as the primary response",
+        "Response closes with one concrete next step the user can take within ~48 hours"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "okr-outcome-vs-output",
+      "wiki_attached": true,
+      "prompt": "Draft Q4 OKRs for my growth team, please give feedback:\n\nObjective: Grow the product\nKR1: Ship referral feature by Oct 31\nKR2: Launch new pricing page\nKR3: Run 3 webinars\n\nMy VP wants these locked in by Friday.",
+      "expected_output": "Coach surfaces that KRs are outputs / activities, not outcomes. Asks what the team actually wants to be true for the customer or business if these are achieved. Cites wiki page(s) on OKRs / outcomes. Coaches toward rewriting at least one KR as a measurable outcome before locking anything in.",
+      "expectations": [
+        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response explicitly identifies the outputs-vs-outcomes distinction (or equivalent: 'activities vs results', 'ship dates vs customer impact')",
+        "Response asks at least one Socratic question about target customer, behavior change, or measurable outcome",
+        "Response does NOT just polish the wording of the existing KRs while keeping them as ship-dates",
+        "Response closes with one concrete next step the user can take within ~48 hours"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "opportunity-solution-tree-build",
+      "wiki_attached": true,
+      "prompt": "Our 30-day retention dropped from 42% to 31% over the last quarter. I want to use an opportunity solution tree to figure out what to do. Can you help me build one?",
+      "expected_output": "Coach grounds the OST work in the wiki (Teresa Torres / continuous discovery canon), walks the user through the structure (desired outcome → opportunities → solutions → experiments), and asks Socratic questions specific to this user's retention drop instead of giving a generic template. Cites pages.",
+      "expectations": [
+        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response references Teresa Torres, continuous discovery, or opportunity solution trees as canon (SVPG / Torres tradition)",
+        "Response walks the user through OST structure (desired outcome, opportunities, solutions, experiments / assumption tests) rather than only naming the framework abstractly",
+        "Response asks a Socratic question tied to this specific retention drop (e.g. which customer segment, what behavior changed, what evidence they already have)",
+        "Response closes with one concrete next step the user can take within ~48 hours"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "no-wiki-fallback",
+      "wiki_attached": false,
+      "prompt": "I'm preparing to write a PRD for a new feature. Can you coach me through it?",
+      "expected_output": "Coach does NOT attempt to coach without the wiki. Uses AskUserQuestion (or equivalent) to surface the two options for attaching the wiki (user clones themselves, or skill clones to a path and user attaches it). Mentions the wiki URL. Does not fabricate Product Operating Model guidance.",
+      "expectations": [
+        "Response does NOT proceed to give substantive PRD coaching as if the wiki were available",
+        "Response surfaces the wiki repo URL (github.com/alexeyhimself/product-operating-model-llm-wiki)",
+        "Response presents the user with explicit options for attaching the wiki (e.g. user clones themselves OR skill clones and user attaches)",
+        "Response uses the AskUserQuestion tool (or surfaces the choice as a clearly enumerated decision)",
+        "Response does NOT invent Product Operating Model canon from training data"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "refuse-wiki-write",
+      "wiki_attached": true,
+      "prompt": "I've been reading Bob Moesta's Jobs to Be Done stuff and I think the wiki is missing it. Can you add a new page on JTBD under wiki/concepts/ summarizing the key ideas and citing Bob's book? Just make it up in a sensible structure.",
+      "expected_output": "Coach refuses to write to the wiki and redirects the user. Explains the skill is the coach, not the maintainer. Points the user to the wiki's own contribution flow (raw/ + 'ingest this' or equivalent README guidance) and says this should happen in a separate session against a read-write clone or fork. Does NOT create the page.",
+      "expectations": [
+        "Response refuses to create / write / modify any file inside the wiki directory",
+        "Response explains the skill is the coach, not the wiki maintainer (or equivalent role-distinction language)",
+        "Response points the user toward the wiki's own contribution flow (e.g. raw/, the wiki's README, or a separate read-write session)",
+        "Response does NOT actually create a JTBD page under wiki/concepts/ (no Write tool call inside the wiki path)"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "wiki-silence-honesty",
+      "wiki_attached": true,
+      "prompt": "What does the Product Operating Model say about using ICE vs RICE vs WSJF for prioritization? Which one does the wiki recommend for a growth-stage B2B SaaS?",
+      "expected_output": "Coach checks the wiki, and if the wiki has nothing or very little on this specific comparison, says so honestly instead of inventing canon. Offers the user the option to feed a source on prioritization frameworks into the wiki (in a separate read-write session) so future coaching has it. Does not fabricate page citations.",
+      "expectations": [
+        "Response checks the wiki (e.g. reads index.md or relevant pages) before answering",
+        "If the wiki has no dedicated coverage of ICE/RICE/WSJF comparison, response says so explicitly rather than inventing canon",
+        "Response offers the user the option to feed a source into the wiki (in a separate session) for future coverage",
+        "Response does NOT fabricate citations to wiki pages that do not exist",
+        "Response distinguishes what the wiki actually says from the coach's own synthesis or general PM knowledge"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "jumps-to-solution-pullback",
+      "wiki_attached": true,
+      "prompt": "Retention is hurting us. We're going to build a referral program — invite-a-friend gets both sides a free month. The CEO already announced it on all-hands. I just need help designing the referral flow.",
+      "expected_output": "Coach kindly pushes back on jumping to the referral-program solution before validating the problem (low retention is not obviously solved by referrals; referrals are typically a growth lever, not a retention lever). Asks what evidence they have that this will move retention, what the underlying churn driver actually is, and what assumption needs to hold for the referral program to work. Cites wiki pages.",
+      "expectations": [
+        "Response cites at least one wiki page using [[page-name]] link syntax",
+        "Response pushes back on jumping to the referral-program solution before validating the underlying problem",
+        "Response asks about the underlying retention / churn problem (not just the referral flow design)",
+        "Response names at least one assumption that needs to hold for the referral program to actually move retention",
+        "Response does NOT immediately dive into designing the referral flow as the primary response",
+        "Response closes with one concrete next step the user can take within ~48 hours"
+      ]
+    }
+  ]
+}

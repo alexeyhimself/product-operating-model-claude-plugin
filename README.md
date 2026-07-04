@@ -1,8 +1,8 @@
 # product-operating-model-claude-plugin
 
-A custom Claude Code / Cowork **marketplace** that distributes the **Product Coach** plugin — an AI coach grounded in the [Product Operating Model LLM Wiki](https://github.com/alexeyhimself/product-operating-model-llm-wiki).
+A custom Claude Code **marketplace** that distributes the **Product Coach** plugin — an AI coach grounded in the [Product Operating Model LLM Wiki](https://github.com/alexeyhimself/product-operating-model-llm-wiki).
 
-The plugin is intentionally thin: the knowledge of the model lives in the wiki repo, not in the skill. On every invocation, the coach reads the wiki, cites specific pages, and grounds its coaching in them.
+The plugin is intentionally thin: the knowledge of the model lives in the LLM Wiki repo, not in this skill. On every invocation, the coach reads the wiki, cites specific pages, and grounds its coaching in them.
 
 ## Repository layout
 
@@ -35,7 +35,7 @@ Once installed, the plugin shows up in Cowork:
 
 ## Use
 
-After install, the `product-coach` skill triggers automatically when you ask for feedback or guidance on product strategy, discovery, roadmaps, OKRs, PRDs, prototyping, etc.
+After installation, call `/product-coach` skill when you need some guidance or feedback on product: vision, strategy, discovery, delivery, roadmaps, OKRs, PRDs, prototyping, etc.
 
 ![Product Coach skill available in Claude Cowork](assets/plugin-available-to-be-called-in-claude-cowork.png)
 

@@ -26,6 +26,7 @@ In Claude Code or Cowork:
 ```
 /plugin marketplace add alexeyhimself/product-operating-model-claude-plugin
 /plugin install product-coach@product-operating-model
+/reload-plugins
 ```
 
 Once installed, the plugin shows up in Cowork:

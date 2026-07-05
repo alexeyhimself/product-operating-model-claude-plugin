@@ -5,9 +5,9 @@ aliases: [model-as-coach, ai-product-coach, foundation-model-as-coach]
 status: drafting
 tags: [coaching, ai, learning, foundation-models, core-concept]
 sources: ["[[2026-02-04-cagan-product-coaching-and-ai]]", "[[2026-04-14-cagan-ai-product-coaching-women-in-product]]", "[[2026-06-04-cagan-pm-theater-age-of-ai-modern-cto]]"]
-related: ["[[product-coaching]]", "[[trust-over-control]]", "[[marty-cagan]]", "[[svpg]]", "[[overview]]", "[[model-as-coach-readiness]]", "[[product-sense]]", "[[build-to-learn-vs-build-to-earn]]"]
+related: ["[[product-coaching]]", "[[trust-over-control]]", "[[marty-cagan]]", "[[svpg]]", "[[overview]]", "[[model-as-coach-readiness]]", "[[product-sense]]", "[[build-to-learn-vs-build-to-earn]]", "[[strategic-context]]"]
 created: 2026-06-14
-updated: 2026-07-03
+updated: 2026-07-05
 ---
 
 # Model as Product Coach
@@ -22,7 +22,7 @@ Configure the model with three layers of context:
 
 1. **Project files** — what the model should ground its reasoning in. Cagan's reference example: [svpg.com/examples](https://www.svpg.com/examples). **This wiki is one such project-files set** — the [`wiki/`](../) body is the knowledge.
 2. **Project instructions** — how the model should behave with that knowledge. *Crucially*, instruct it to **prioritize the product operating model** (vs the project model). Foundation models otherwise "appear confused" because the product world holds many competing voices. **This wiki's [`CLAUDE.md`](../../CLAUDE.md) is the project instructions.**
-3. **Your company's strategic context** — [[product-vision|vision]], [[product-strategy|strategy]], team topology, [[team-objectives|team objectives]]. Cagan: the model becomes genuinely useful when it knows your domain. Add this as a [`case-study`](../case-studies/) / field note.
+3. **The org's [[strategic-context|strategic context]]** — [[product-vision|vision]], [[product-strategy|strategy]], [[team-topology|team topology]], [[team-objectives|objectives]], [[product-principles|principles]]. Cagan: the model becomes genuinely useful when it knows your domain. This is the org's own **baseline**, authored and maintained by the org and supplied to the agent **separately** (a companion store of files / a separate org-specific wiki) — it is deliberately **not** part of this org-agnostic wiki. See [[strategic-context]].
 
 Use it to develop product sense, learn your company / industry / users / metrics / constraints, prepare for decisions, and seek critique. **Question its outputs; look for critique and mistakes, not affirmation.** The model is non-deterministic — the same question can yield a different (and not necessarily better) answer tomorrow.
 
@@ -48,7 +48,7 @@ A weekly 1:1 with a manager who doesn't have time, didn't grow up in the product
 - **Leader setup recommended by Cagan:** model-as-coach **plus** a strong human leadership coach — that combination "gives you the best chance of getting to a successful outcome."
 
 ## In your context
-This wiki is project files for model-as-product-coach; [`CLAUDE.md`](../../CLAUDE.md) is the project instructions. Add your company's strategic context as a [`case-study`](../case-studies/) / field note and you have Cagan's full prescription. _Field note placeholder — what's your strategic context, and how is the model coaching you actually performing? Where is it strongest? Where is it weakest?_
+This wiki is project files for model-as-product-coach; [`CLAUDE.md`](../../CLAUDE.md) is the project instructions. The third layer — the org's own [[strategic-context|strategic-context baseline]] — is supplied to the agent **separately** (never stored in this org-agnostic wiki). _Agent prompt: is the org's strategic-context baseline present, current, and complete (the six elements)? If it's missing or stale, that gap is itself the first coaching finding — help the org author/maintain it ([[coaching-vs-contracting]]), don't write it for them._
 
 ## Related
 - [[product-coaching]] — the broader concept; this is the AI-specific form.

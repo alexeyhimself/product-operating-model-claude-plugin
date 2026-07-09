@@ -6,6 +6,8 @@ The plugin is intentionally thin: the knowledge of the model lives in the LLM Wi
 
 A copy of the wiki is **bundled inside the plugin** and kept in sync automatically by CI — installing the plugin installs the wiki too. No separate clone, attach, or setup step.
 
+> **Using Codex CLI instead of Claude Code / Cowork?** There's a sibling repo with the same skill packaged for Codex: [`alexeyhimself/product-operating-model-codex-plugin`](https://github.com/alexeyhimself/product-operating-model-codex-plugin). Both plugins bundle the same wiki and are kept in sync by the same source of truth.
+
 ## Repository layout
 
 ```
